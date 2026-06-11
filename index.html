@@ -1,0 +1,251 @@
+{% extends "base.html" %}
+
+{% block title %}Patient Registry{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+```
+<div>
+    <h2 class="fw-bold">
+        <i class="bi bi-hospital text-primary"></i>
+        Patient Registry
+    </h2>
+
+    <p class="text-muted mb-0">
+        Clinical registry for monitoring patient lab metrics and AI-generated health insights.
+    </p>
+</div>
+
+<a href="{{ url_for('add_patient') }}"
+   class="btn btn-primary">
+    <i class="bi bi-person-plus-fill me-1"></i>
+    Register New Patient
+</a>
+```
+
+</div>
+
+<!-- Dashboard Cards -->
+
+<div class="row mb-4">
+
+```
+<div class="col-md-4 mb-3">
+
+    <div class="card shadow-sm border-0 h-100">
+
+        <div class="card-body">
+
+            <h2 class="fw-bold text-primary">
+                {{ patients|length }}
+            </h2>
+
+            <small class="text-muted">
+                REGISTERED PATIENTS
+            </small>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="col-md-4 mb-3">
+
+    <div class="card shadow-sm border-0 h-100">
+
+        <div class="card-body">
+
+            <h2 class="fw-bold text-success">
+                {{ patients|length }}
+            </h2>
+
+            <small class="text-muted">
+                AI INSIGHTS PROCESSED
+            </small>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="col-md-4 mb-3">
+
+    <div class="card shadow-sm border-0 h-100">
+
+        <div class="card-body">
+
+            <div class="d-flex align-items-center mb-3">
+
+                <i class="bi bi-robot text-success fs-2 me-3"></i>
+
+                <div>
+                    <h5 class="fw-bold mb-0">
+                        Gemini Flash
+                    </h5>
+
+                    <small class="text-muted">
+                        ANALYSIS ENGINE
+                    </small>
+                </div>
+
+            </div>
+
+            <hr>
+
+            <span class="badge bg-success">
+                Active
+            </span>
+
+            <p class="text-muted small mt-3 mb-0">
+                Powered by Google Gemini AI for automated health prediction and clinical insight generation.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+```
+
+</div>
+
+<!-- Patient Records -->
+
+<div class="card shadow-sm border-0">
+
+```
+<div class="card-header bg-white">
+    <h5 class="mb-0">
+        Patient Records
+    </h5>
+</div>
+
+<div class="card-body">
+
+    {% if patients %}
+
+    <div class="table-responsive">
+
+        <table class="table table-hover align-middle">
+
+            <thead class="table-light">
+
+                <tr>
+                    <th>ID</th>
+                    <th>Full Name</th>
+                    <th>Date of Birth</th>
+                    <th>Email</th>
+                    <th>Glucose</th>
+                    <th>Haemoglobin</th>
+                    <th>Cholesterol</th>
+                    <th>Actions</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for patient in patients %}
+
+                <tr>
+
+                    <td>#{{ patient.id }}</td>
+
+                    <td>
+                        <strong>{{ patient.full_name }}</strong>
+                    </td>
+
+                    <td>
+                        {{ patient.date_of_birth.strftime('%d %b %Y') }}
+                    </td>
+
+                    <td>
+                        {{ patient.email }}
+                    </td>
+
+                    <td>
+                        {{ patient.glucose }} mg/dL
+                    </td>
+
+                    <td>
+                        {{ patient.haemoglobin }} g/dL
+                    </td>
+
+                    <td>
+                        {{ patient.cholesterol }} mg/dL
+                    </td>
+
+                    <td>
+
+                        <a href="{{ url_for('view_patient', id=patient.id) }}"
+                           class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-eye"></i>
+                        </a>
+
+                        <a href="{{ url_for('edit_patient', id=patient.id) }}"
+                           class="btn btn-sm btn-outline-warning">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+
+                        <form method="POST"
+                              action="{{ url_for('delete_patient', id=patient.id) }}"
+                              style="display:inline;">
+
+                            <button type="submit"
+                                    class="btn btn-sm btn-outline-danger"
+                                    onclick="return confirm('Delete this patient record?')">
+
+                                <i class="bi bi-trash"></i>
+
+                            </button>
+
+                        </form>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    {% else %}
+
+    <div class="text-center py-5">
+
+        <i class="bi bi-folder2-open text-muted fs-1"></i>
+
+        <h5 class="mt-3">
+            No Patient Records Found
+        </h5>
+
+        <p class="text-muted">
+            Click "Register New Patient" to create your first patient record.
+        </p>
+
+        <a href="{{ url_for('add_patient') }}"
+           class="btn btn-primary mt-2">
+
+            <i class="bi bi-person-plus-fill me-1"></i>
+            Register New Patient
+
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</div>
+```
+
+</div>
+
+{% endblock %}

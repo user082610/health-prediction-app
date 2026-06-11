@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+
+{% block title %}Register Patient — MIRA Clinical{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="mb-4">
+        <a href="{{ url_for('index') }}" class="btn btn-link text-decoration-none ps-0">
+            ← Back to Patient Registry
+        </a>
+
+        <h2 class="fw-bold">
+            <i class="bi bi-person-plus-fill text-primary"></i>
+            Register New Patient Record
+        </h2>
+
+        <p class="text-muted">
+            Enter patient personal metadata and laboratory test metrics to register a new clinical entry.
+        </p>
+    </div>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+
+            <form method="POST">
+
+                {{ form.hidden_tag() }}
+
+                <!-- Personal Metadata -->
+
+                <h5 class="fw-bold mb-3">
+                    <i class="bi bi-person-badge-fill text-primary"></i>
+                    Personal Metadata
+                </h5>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">
+                            Patient Full Name *
+                        </label>
+
+                        {{ form.full_name(class="form-control") }}
+
+                        {% for error in form.full_name.errors %}
+                        <small class="text-danger">{{ error }}</small>
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">
+                            Date of Birth *
+                        </label>
+
+                        {{ form.date_of_birth(class="form-control") }}
+
+                        {% for error in form.date_of_birth.errors %}
+                        <small class="text-danger">{{ error }}</small>
+                        {% endfor %}
+                    </div>
+
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label">
+                        Contact Email Address *
+                    </label>
+
+                    {{ form.email(class="form-control") }}
+
+                    {% for error in form.email.errors %}
+                    <small class="text-danger">{{ error }}</small>
+                    {% endfor %}
+                </div>
+
+                <hr class="my-4">
+
+                <!-- Laboratory Test Metrics -->
+
+                <h5 class="fw-bold mb-3">
+                    <i class="bi bi-droplet-fill text-primary"></i>
+                    Laboratory Test Metrics
+                </h5>
+
+                <div class="row">
+
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">
+                            Fasting Glucose *
+                        </label>
+
+                        <div class="input-group">
+                            {{ form.glucose(class="form-control") }}
+                            <span class="input-group-text">mg/dL</span>
+                        </div>
+
+                        <small class="text-muted">
+                            Normal reference: 70–100 mg/dL
+                        </small>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">
+                            Haemoglobin (Hb) *
+                        </label>
+
+                        <div class="input-group">
+                            {{ form.haemoglobin(class="form-control") }}
+                            <span class="input-group-text">g/dL</span>
+                        </div>
+
+                        <small class="text-muted">
+                            Normal reference: 12–17 g/dL
+                        </small>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">
+                            Total Cholesterol *
+                        </label>
+
+                        <div class="input-group">
+                            {{ form.cholesterol(class="form-control") }}
+                            <span class="input-group-text">mg/dL</span>
+                        </div>
+
+                        <small class="text-muted">
+                            Desirable: Below 200 mg/dL
+                        </small>
+                    </div>
+
+                </div>
+
+                <!-- AI Notice -->
+
+                <div class="alert alert-light border mt-4">
+                    <strong>
+                        Clinical Intelligence Integration:
+                    </strong>
+
+                    Saving this patient record sends lab metrics to the MIRA
+                    Automated Diagnostic Engine (Gemini Flash) to generate
+                    diagnostic remarks.
+                </div>
+
+                <!-- Buttons -->
+
+                <div class="text-end mt-4">
+
+                    <a href="{{ url_for('index') }}"
+                       class="btn btn-outline-secondary me-2">
+                        Cancel
+                    </a>
+
+                    <button type="submit"
+                            class="btn btn-primary">
+                        Save & Process Record
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

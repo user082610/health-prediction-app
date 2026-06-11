@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% block title %}Patient Details{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <a href="{{ url_for('index') }}"
+       class="btn btn-link text-decoration-none mb-3">
+        ← Back to Registry
+    </a>
+
+    <div class="card shadow-sm border-0">
+
+        <div class="card-header bg-white border-0 py-4">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <div>
+                    <h2 class="fw-bold mb-1">
+                        {{ patient.full_name }}
+                    </h2>
+
+                    <p class="text-muted mb-0">
+                        Patient ID #{{ patient.id }}
+                    </p>
+                </div>
+
+                <div>
+                    <a href="{{ url_for('edit_patient', id=patient.id) }}"
+                       class="btn btn-primary">
+                        Edit Record
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row g-4">
+
+                <div class="col-md-6">
+
+                    <div class="card border-0 bg-light h-100">
+                        <div class="card-body">
+
+                            <h5 class="fw-bold mb-3">
+                                Personal Information
+                            </h5>
+
+                            <p>
+                                <strong>Email:</strong><br>
+                                {{ patient.email }}
+                            </p>
+
+                            <p>
+                                <strong>Date of Birth:</strong><br>
+                                {{ patient.date_of_birth.strftime('%d %b %Y') }}
+                            </p>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <div class="card border-0 bg-light h-100">
+                        <div class="card-body">
+
+                            <h5 class="fw-bold mb-3">
+                                Laboratory Results
+                            </h5>
+
+                            <div class="mb-3">
+                                <strong>Glucose</strong>
+                                <div class="fs-5">
+                                    {{ patient.glucose }} mg/dL
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <strong>Haemoglobin</strong>
+                                <div class="fs-5">
+                                    {{ patient.haemoglobin }} g/dL
+                                </div>
+                            </div>
+
+                            <div>
+                                <strong>Cholesterol</strong>
+                                <div class="fs-5">
+                                    {{ patient.cholesterol }} mg/dL
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="card border-0 mt-4">
+
+                <div class="card-header bg-info bg-opacity-10 border-info">
+                    <h5 class="mb-0">
+                        AI Clinical Insight
+                    </h5>
+                </div>
+
+                <div class="card-body">
+
+                    {% if patient.remarks %}
+                        <p class="mb-0">
+                            {{ patient.remarks }}
+                        </p>
+                    {% else %}
+                        <p class="text-muted mb-0">
+                            No AI analysis available.
+                        </p>
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

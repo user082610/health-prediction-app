@@ -1,0 +1,27 @@
+body{
+    background:#f7f9fc;
+}
+
+.navbar{
+    background:white;
+}
+
+.card{
+    border:none;
+    border-radius:12px;
+}
+
+.table{
+    font-size:14px;
+}
+
+.btn-primary{
+    background:#356dff;
+    border:none;
+}
+
+.alert-success{
+    background:#e8f7ee;
+    border:none;
+    color:#2e7d32;
+}
